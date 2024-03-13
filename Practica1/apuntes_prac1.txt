@@ -1,0 +1,91 @@
+usuario: ac125
+contraseña: 9zt5s5pg7m
+
+instalar filezilla clarion
+
+compilar con -fopenmp y optimizacion 2, -O2
+Fijar variables de entorno:
+Para poner el numero de hebras en la terminal se debe exportar el numero de hebras
+export OMP_NUM_THREADS=<numero_hebras_deseadas>
+Comandos: ssh -X ac125@atcgrid.ugr.es 
+
+por filezilla en servidor: sftp://atcgrid.ugr.es
+	         usuario: ac125
+                 contraseña: 9zt5s5pg7m
+                 
+                 
+Comandos con conexión SSH  
+
+En OMP tenemos directivas, funciones y variables de entorno
+
+Directivas:
+
+	Si las directivas te ocupan más de una linea se debe colocar \
+
+El pragma tine {} como si fuera una clase.
+
+DIRECTIVA    ejecutable               declarativa Con sentencias
+
+con bloque   
+estructurado: parallel
+             sections, 
+             worksharing, 
+             single 
+             master
+             critical
+             ordered
+             
+                                        
+bucle         DO/for
+
+simple (una
+sentencia)   atomic
+
+autónoma (sin                            declarativa sin
+código 
+asocidado)   barrier, flush              threadprivate
+
+ANTES DE CUALQUIER DIRECTIVA, DEBEN DE ESTAR DENTRO DE UN PARALLEL
+
+Directiva for, es para poner for en paralelos
+#pragma omp for [clausula]
+	for-loop <numero_iteraciones>
+Directiva parallel, hebras en paralelo
+Directiva sections,luego para cada section es en singular, define secciones
+para cada una de las hebras, siempre se ejecutan todas las seciones.
+#pragma omp setions [clausulas]
+{
+	#pragma omp section
+		estructura de bloque 1
+	#pragma omp section
+		estructura de bloque 2	
+
+}
+Directiva single, Dentro de un codigo paralelo se usa este pragma para que solamente
+una hebra ejecute ese bloque.
+sigle, #pragma omp single [clausulas]
+Directiva barrier, barrera explicita, para sincronizar las hebras en un punto,
+esta no tiene codigo.	
+Atomic es más eficiente;
+Directiva atomic/critical, sirve para hacer una expresion atomica, es decir, que solamente
+una hebra puede ejecutar al mismo tiempo esa expresion.
+con critical #pragma omp critical [(name)]
+	bloque
+con atomic #pragma omp atomic 
+	<expresion> por ejemplo ++ o += de este tipo
+	
+Diferencia entre atomic y critical, critical varias instrucciones y atomic solo
+con una, binarias simples.
+
+Se puede combinar, #pragma omp parallel for por ejemplo.	
+
+Directiva master, con esta directiva solamente la hebra master puede ejecutar
+la estructura que tiene la directiva master
+#pragma omp master
+	estrctura de bloques
+
+
+Clausulas: por ejemplo esta private(var), es para que cada hebra tenga una copia 
+de esa variable que ninguna otra hebra puede modificar
+
+La hebra maestra es la 0 como en SO 
