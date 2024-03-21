@@ -14,7 +14,7 @@
 #endif
 /**
  * @file  single.c 
- * @brief _Se inicializa los componentes de un vector con el valor solicitado al usuario por el hilo que ejecuta <tt>single</tt>_
+ * @brief Se inicializa los componentes de un vector con el valor solicitado al usuario por el hilo que ejecuta <tt>single</tt>
  * @author Extraído del libro: Chapman, B: Using OpenMP. Portable Shared Memory Parallel Programming
  
  *  DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
@@ -56,21 +56,21 @@
  *  
  * @return 0 upon exit success (print los componentes del vector una vez inicializados )
  *  
- * **Objetivo**
+ * *Objetivo*
  * 
  * El código ilustra:
  * 
  * - Directivas <tt>single, for, parallel</tt> 
  *
- * **Compilación **
+ * *Compilación *
  * @code
  * gcc -O2 -fopenmp -o single single.c
  * @endcode
  * 
- *  **Ejecución **
- * ~~~~~~~~~~~~~~~~~~~~~
+ *  *Ejecución *
+ * ~~~~~~~
  * single 
- * ~~~~~~~~~~~~~~~~~~~~~
+ * ~~~~~~~
  * 
 */
 int main()
@@ -90,31 +90,20 @@ int main()
    }
 
    #pragma omp for
-   {
-     for (i=0; i<n; i++)
+   for (i=0; i<n; i++)
        b[i] = a;
-   
-   }
-   #pragma omp single
-   {
-   	#pragma omp for
-   	
-   		for (int k = 0; k < n; k++){
-   			printf(" b[%d] = %d\t",k,b[k]);	
-   		}
-   		printf("Single ejecutada por la hebra %d\n",omp_get_thread_num());
-   		printf("\n");
-   	
-   	 
-   
-   } 
-   
-   
+#pragma omp single
+{
+	printf("Single ejecutada por la hebra %d\n",
+             omp_get_thread_num());
+   #pragma omp for
+   for (i=0; i<n; i++)
+       printf(" b[%d] = %d\t",i,b[i]);
+       printf("\n");
+}
 } 
 
    printf("Depués de la región parallel:\n");
-   for (i=0; i<n; i++)
-       printf(" b[%d] = %d\t",i,b[i]);
-   printf("\n");
+   
    return(0);
 }

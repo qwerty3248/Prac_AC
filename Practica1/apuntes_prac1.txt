@@ -1,5 +1,3 @@
-usuario: ac125
-contraseña: 9zt5s5pg7m
 
 instalar filezilla clarion
 
