@@ -1,0 +1,23 @@
+No tiene clausulas: master,barrier,critical y atomic
+
+Private: valor entrada ni la de salida esta definido, se lo tiene que poner el
+programador.
+
+lastprivate pregunta examen.
+lastprivate asigna a la variable de la ultima iteraccion secuencial.
+For y sections son influenciadas por esto.
+
+firstprivate es con la entrada, el valor inicial es el que se difunde en cada
+hebra.
+
+default es para ambito general de las variables, si ponemos none es para definir
+ambito de las variables, para quitar errores sirve esto
+
+reduction IMPORTANTE: difunde la variable por cada hebra sin tener que usar una
+variable local.
+
+
+Copyprivate IMPORTANTE: Solo con single, a todas las hebras aunque no entren en 
+el single se le da el valor de las variables pasada a Copyprivate. 
+
+
